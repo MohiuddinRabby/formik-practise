@@ -1,6 +1,6 @@
 import React from "react";
-import { useFormik } from "formik";
-
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 const FormOne = () => {
   const initialValues = {
     name: "",
@@ -9,60 +9,34 @@ const FormOne = () => {
   const onSubmit = (values) => {
     console.log("values", values);
   };
-  const validate = (formValues) => {
-    let errors = {};
-    if (!formValues.name) {
-      errors.name = "Name required";
-    }
-    if (!formValues.email) {
-      errors.email = "Email required";
-    }
-    return errors;
-  };
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validate,
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name Required"),
+    email: Yup.string().required("Email Required"),
   });
-  // console.log(formik.errors);
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      <Form>
         <div>
           <label htmlFor="name">Name: </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-            placeholder="name"
-          />
-          {formik.errors.name ? (
-            <p style={{ color: "red" }}>{formik.errors.name}</p>
-          ) : null}
+          <Field type="text" id="name" name="name" placeholder="name" />
+          <ErrorMessage name="name" />
         </div>
         <br />
         <br />
         <div>
           <label htmlFor="email">Email: </label>
-          <input
-            type="email"
-            id="email"
-            email="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            placeholder="email"
-          />
-          {formik.errors.email ? (
-            <p style={{ color: "red" }}>{formik.errors.email}</p>
-          ) : null}
+          <Field type="email" id="email" name="email" placeholder="email" />
+          <ErrorMessage name="email" />
         </div>
         <br />
         <br />
-        <button>Submit</button>
-      </form>
-    </div>
+        <button type="submit">Submit</button>
+      </Form>
+    </Formik>
   );
 };
 

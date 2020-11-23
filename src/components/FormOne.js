@@ -5,6 +5,10 @@ const FormOne = () => {
   const initialValues = {
     name: "",
     email: "",
+    object: {
+      objectOne: "",
+      objectTwo: "",
+    },
   };
   const onSubmit = (values) => {
     console.log("values", values);
@@ -31,6 +35,30 @@ const FormOne = () => {
           <label htmlFor="email">Email: </label>
           <Field type="email" id="email" name="email" placeholder="email" />
           <ErrorMessage name="email" />
+        </div>
+        <br />
+        <br />
+        <div>
+          <label htmlFor="objectOne">objectOne: </label>
+          <Field
+            type="text"
+            id="objectOne"
+            name="object.objectOne"
+            placeholder="objectOne"
+          />
+          <ErrorMessage name="object.objectOne" />
+        </div>
+        <br />
+        <br />
+        <div>
+          <label htmlFor="objectTwo">objectOne: </label>
+          <Field
+            type="text"
+            id="objectTwo"
+            name="object.objectTwo"
+            placeholder="objectTwo"
+          />
+          <ErrorMessage name="object.objectTwo" />
         </div>
         <br />
         <br />

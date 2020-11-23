@@ -6,8 +6,8 @@ const App = () => {
   return (
     <div>
       <h1 className="text-center">Formik</h1>
-      {/* <FormOne /> */}
-      <FormOnePractise />
+      <FormOne />
+      {/* <FormOnePractise /> */}
     </div>
   );
 };

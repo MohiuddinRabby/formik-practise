@@ -1,13 +1,11 @@
 import React from "react";
-import FormOne from "./components/FormOne";
-import FormOnePractise from "./components/FormOnePractise";
+import FormContainer from "./components/FormTwo/FormContainer";
 
 const App = () => {
   return (
-    <div>
-      <h1 className="text-center">Formik</h1>
-      <FormOne />
-      {/* <FormOnePractise /> */}
+    <div className="container">
+      <h1 className="text-center py-5 text-primary">Formik</h1>
+      <FormContainer />
     </div>
   );
 };

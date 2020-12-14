@@ -1,36 +1,24 @@
-import { useFormik } from "formik";
 import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "./FormThree.css";
-const validate = (values) => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = "Required";
-  } else if (values.firstName.length > 15) {
-    errors.firstName = "Must be 15 characters or less";
-  }
 
-  if (!values.lastName) {
-    errors.lastName = "Required";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Must be 20 characters or less";
-  }
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-
-  return errors;
-};
 const FormThree = () => {
   const formik = useFormik({
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      firstName: Yup.string()
+        .max(15, "Must be 15 characters or less")
+        .required("Required"),
+      lastName: Yup.string()
+        .max(20, "Must be 20 characters or less")
+        .required("Required"),
+    }),
     initialValues: {
       email: "",
       firstName: "",
       lastName: "",
     },
-    validate,
     onSubmit: (values) => {
       console.log(values);
     },
@@ -44,22 +32,28 @@ const FormThree = () => {
             type="email"
             name="email"
             className="form-control"
-            onChange={formik.handleChange}
-            value={formik.values.email}
+            // onChange={formik.handleChange}
+            // onBlur={formik.handleBlur}
+            // value={formik.values.email}
+            {...formik.getFieldProps("email")}
           />
         </div>
-        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+        {formik.touched.email && formik.errors.email ? (
+          <div className="text-danger">{formik.errors.email}</div>
+        ) : null}
         <div className="form-group">
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
             name="firstName"
             className="form-control"
-            onChange={formik.handleChange}
-            value={formik.values.firstName}
+            // onChange={formik.handleChange}
+            // onBlur={formik.handleBlur}
+            // value={formik.values.firstName}
+            {...formik.getFieldProps("firstName")}
           />
-          {formik.errors.firstName ? (
-            <div>{formik.errors.firstName}</div>
+          {formik.touched.firstName && formik.errors.firstName ? (
+            <div className="text-danger">{formik.errors.firstName}</div>
           ) : null}
         </div>
         <div className="form-group">
@@ -68,11 +62,15 @@ const FormThree = () => {
             type="text"
             name="lastName"
             className="form-control"
-            onChange={formik.handleChange}
-            value={formik.values.lastName}
+            // onChange={formik.handleChange}
+            // onBlur={formik.handleBlur}
+            // value={formik.values.lastName}
+            {...formik.getFieldProps("lastName")}
           />
         </div>
-        {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
+        {formik.touched.lastName && formik.errors.lastName ? (
+          <div className="text-danger">{formik.errors.lastName}</div>
+        ) : null}
         <button type="submit" className="btn btn-primary">
           Submit
         </button>

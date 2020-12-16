@@ -1,12 +1,11 @@
 import React from "react";
-import FormFive from "./components/FormFive/FormFive";
-
+import FormTwo from "./components/FormTwo/FormTwo";
 
 const App = () => {
   return (
     <div className="container">
       <h1 className="text-center py-5 text-primary">Formik</h1>
-      <FormFive />
+      <FormTwo />
     </div>
   );
 };

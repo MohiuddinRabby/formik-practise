@@ -1,15 +1,14 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
-import { createUser } from "./helper";
-
-// Validation schema 
+import ddlOne from "./ddlOne";
+import ddlTwo from "./ddlTwo";
+// Validation schema
 const validationSchema = Yup.object().shape({
   userName: Yup.string().required("User Name required"),
   userEmail: Yup.string().email().required("Email required"),
-  userCityName: Yup.object().shape({
+  ddlOne: Yup.object().shape({
     label: Yup.string().required("City Name required"),
     value: Yup.string().required("City Name required"),
   }),
@@ -17,39 +16,24 @@ const validationSchema = Yup.object().shape({
 const initialValues = {
   userName: "",
   userEmail: "",
-  userCityName: "",
+  ddlOne: "",
 };
-
-const FormTwo = () => {
-  const cityNameDDL = [
-    { value: 1, label: "Dhaka" },
-    { value: 2, label: "Chittagong" },
-    { value: 3, label: "Sylhet" },
-  ];
-
+const FormSix = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [DDLOne, setDDL] = useState(ddlOne);
+  // eslint-disable-next-line no-unused-vars
+  const [DDLTwo, setDDLTwo] = useState(ddlTwo);
   return (
     <>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          const userData = {
-            title: values?.userName,
-            body: values?.userEmail,
-            userId: 1,
-          };
+          console.log(`values`, values);
           resetForm();
-          createUser(userData);
         }}
       >
-        {({
-          handleSubmit,
-          values,
-          errors,
-          touched,
-          setFieldValue,
-          isValid,
-        }) => (
+        {({ values, setFieldValue, isValid }) => (
           <>
             <Form>
               <div className="container">
@@ -79,28 +63,38 @@ const FormTwo = () => {
                     </div>
                   </div>
                   <div className="col-lg-4">
-                    <label>City</label>
+                    <label>Dropdown</label>
                     <Select
-                      name="userCityName"
+                      name="ddlOne"
                       onChange={(valueOption) => {
-                        setFieldValue("userCityName", valueOption);
+                        setFieldValue("ddlOne", valueOption);
+                        setFieldValue("ddlTwo", {});
                       }}
-                      options={cityNameDDL || []}
-                      value={values?.userCityName}
+                      options={DDLOne || []}
+                      value={values?.ddlOne}
                     />
                   </div>
-
                   <div className="col-lg-4">
-                    <button
-                      className="btn btn-primary mt-5"
-                      type="submit"
-                      disabled={!isValid}
-                    >
-                      Submit
-                    </button>
+                    <label>Dropdown Two</label>
+                    <Select
+                      name="DDLTwo"
+                      onChange={(valueOption) => {
+                        setFieldValue("ddlTwo", valueOption);
+                      }}
+                      options={DDLTwo || []}
+                      value={values?.ddlTwo}
+                    />
                   </div>
                 </div>
               </div>
+              <br />
+              <button
+                className="btn btn-primary mt-5"
+                type="submit"
+                disabled={!isValid}
+              >
+                Submit
+              </button>
             </Form>
           </>
         )}
@@ -109,4 +103,4 @@ const FormTwo = () => {
   );
 };
 
-export default FormTwo;
+export default FormSix;
